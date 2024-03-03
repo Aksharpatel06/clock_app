@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:clock_app/view/screen/stopwatch.dart';
+import 'package:clock_app/view/screen/timer.dart';
 import 'package:flutter/material.dart';
 
 class homescreen extends StatefulWidget {
@@ -15,47 +17,24 @@ DateTime datetime = DateTime.now();
 class _homescreenState extends State<homescreen> {
   @override
   Widget build(BuildContext context) {
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         datetime = DateTime.now();
       });
     });
     return Scaffold(
-      backgroundColor: Color(0xff152552),
+      backgroundColor: const Color(0xff132561),
       body: Column(
         children: [
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 50,
+                const SizedBox(
+                  height: 60,
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //   children: [
-                //     Padding(
-                //       padding: const EdgeInsets.only(right: 180.0),
-                //       child: Text(
-                //         'Edit',
-                //         style: TextStyle(
-                //             color: Colors.blue.shade700,
-                //             fontSize: 15,
-                //             fontWeight: FontWeight.w500),
-                //       ),
-                //     ),
-                //     Icon(
-                //       Icons.add,
-                //       color: Colors.white,
-                //       size: 30,
-                //     )
-                //   ],
-                // ),
-                SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 240.0),
+                const Padding(
+                  padding: EdgeInsets.only(right: 250.0),
                   child: Text(
                     'Clock',
                     style: TextStyle(
@@ -64,14 +43,14 @@ class _homescreenState extends State<homescreen> {
                         fontWeight: FontWeight.w500),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Center(
                   child: Container(
                     height: 305,
                     width: 305,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color(0xff15264f),
                         boxShadow: [
@@ -84,7 +63,7 @@ class _homescreenState extends State<homescreen> {
                     child: Container(
                         height: 300,
                         width: 300,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: Color(0xff15264f),
                         ),
@@ -114,14 +93,14 @@ class _homescreenState extends State<homescreen> {
                               child: Container(
                                 height: 250,
                                 width: 250,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: Color(0xff22345E),
                                 ),
                                 alignment: Alignment.center,
                                 child: Stack(
                                   children: [
-                                    Center(
+                                    const Center(
                                         child: CircleAvatar(
                                       radius: 10,
                                       backgroundColor: Colors.white12,
@@ -129,7 +108,7 @@ class _homescreenState extends State<homescreen> {
                                     Center(
                                       child: Transform.rotate(
                                         angle: datetime.minute * 6 * pi / 180,
-                                        child: VerticalDivider(
+                                        child: const VerticalDivider(
                                           color: Colors.white,
                                           thickness: 4,
                                           indent: 40,
@@ -141,7 +120,7 @@ class _homescreenState extends State<homescreen> {
                                       child: Transform.rotate(
                                         angle: (datetime.hour * (30) * pi / 180) +
                                             ((6 * pi / 180) * (datetime.minute / 12)),
-                                        child: VerticalDivider(
+                                        child: const VerticalDivider(
                                           color: Colors.white,
                                           thickness: 5,
                                           indent: 70,
@@ -152,7 +131,7 @@ class _homescreenState extends State<homescreen> {
                                     Center(
                                       child: Transform.rotate(
                                         angle: datetime.second * 6 * pi / 180,
-                                        child: VerticalDivider(
+                                        child: const VerticalDivider(
                                           color: Colors.red,
                                           thickness: 3,
                                           indent: 25,
@@ -168,58 +147,135 @@ class _homescreenState extends State<homescreen> {
                         )),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                Text(
-                  'Surat',
-                  style: TextStyle(
-                      color: Colors.blue.shade700,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w500),
+                Padding(
+                  padding: const EdgeInsets.only(left: 70.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        '${(datetime.hour > 12) ? ((datetime.hour%12) > 9)? datetime.hour % 12:('0${datetime.hour % 12}'): datetime.hour} : ${(datetime.minute>9)?datetime.minute:('0${datetime.minute}')} ',
+                        style: const TextStyle(
+                            color: Colors.white, fontSize: 50, fontWeight: FontWeight.w500),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15.0),
+                        child: Text(
+                          '${(datetime.hour >= 12) ? 'PM' : 'AM'}',
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 30, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Text(
-                  '${(datetime.hour > 12) ? (datetime.hour >= 9)?(datetime.hour % 12) :datetime.hour: datetime.hour} : ${datetime.minute} ${(datetime.hour >= 12) ? 'PM' : 'AM'}',
-                  style: TextStyle(
-                      color: Colors.white, fontSize: 30, fontWeight: FontWeight.w500),
+                  '${(datetime.day > 9)? datetime.day:('0${datetime.day}')} - ${(datetime.month>9)?datetime.month:('0${datetime.month}')} - ${datetime.year}',
+                  style: const TextStyle(
+                      color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(height: 15,),
+                Divider(color: Colors.indigo.shade700,thickness: 1,height: 0.5,indent: 30,endIndent:30,),
+                const SizedBox(height: 15,),
+                Container(
+                  height:70,
+                  width: 310,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                     color: const Color(0xff15264f),
+                      boxShadow: [
+                        const BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          spreadRadius: 2,
+                        )
+                      ]
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.only(left: 18.0),
+                        child: Text('Surat',style:TextStyle(fontSize: 20,color: Colors.white)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 18.0),
+                        child: Text('${(datetime.hour > 12) ? ((datetime.hour%12) > 9)? datetime.hour % 12:('0${datetime.hour % 12}'): datetime.hour} : ${(datetime.minute>9)?datetime.minute:('0${datetime.minute}')}',style:const TextStyle(fontSize: 20,color: Colors.white) ,),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
           Container(
-            height: 70,
-            color: Color(0xff071954),
+            height: 100,
+            // color: Color(0xff071954),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                const SizedBox(width: 1,),
+                Container(
+                  height: 70,
+                  width: 70,
+                  decoration: BoxDecoration(
+                    color: const Color(0xff15264a),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        const BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 5,
+                          spreadRadius: 2,
+                        )
+                      ]
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.schedule,size: 25,color: Colors.white,),
+                      Text('Clock',style: TextStyle(color: Colors.white,fontSize: 12),)
+                    ],
+                  ),
+                ),
+                const Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.schedule,size: 25,color: Colors.white,),
-                    Text('Clock',style: TextStyle(color: Colors.white,fontSize: 12),)
+                    Icon(Icons.access_alarm,size: 25,color: Colors.grey,),
+                    Text('Alarm',style: TextStyle(color: Colors.grey,fontSize: 12),)
                   ],
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Icon(Icons.access_alarm,size: 25,color: Colors.white,),
-                    Text('Alarm',style: TextStyle(color: Colors.white,fontSize: 12),)
-                  ],
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => stopwatch(),));
+                    });
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.timer_sharp,size: 25,color: Colors.grey,),
+                      Text('Stopwatch',style: TextStyle(color: Colors.grey,fontSize: 12),)
+                    ],
+                  ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Icon(Icons.timer_sharp,size: 25,color: Colors.white,),
-                    Text('Stopwatch',style: TextStyle(color: Colors.white,fontSize: 12),)
-                  ],
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => timer(),
+                      ));
+                    });
+                  },
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.av_timer_rounded,size: 25,color:Colors.grey,),
+                      Text('Timer',style: TextStyle(color: Colors.grey,fontSize: 12),)
+                    ],
+                  ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Icon(Icons.av_timer_rounded,size: 25,color: Colors.white,),
-                    Text('Timer',style: TextStyle(color: Colors.white,fontSize: 12),)
-                  ],
-                ),
+                const SizedBox(width: 5,),
               ],
             ),
           )
